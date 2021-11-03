@@ -81,7 +81,7 @@ function startRenderLoop(engine) {
 
 function pointerDown(event, pick_info) {
     // still use left mouse click for panning image
-    if (event.pointerType !== 'mouse' || event.button !== 0) {
+    if ((event.pointerType === 'mouse' && event.button !== 0) || event.pointerType === 'touch'){
         selected_photo = (selected_photo + 1) % babylon_domes.length;
         let i;
         for (i = 0; i < babylon_domes.length; i++) {
