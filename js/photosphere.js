@@ -62,6 +62,7 @@ function createScene(canvas, engine) {
         xr_control = xr_helper;
         xr_control.teleportation.detach();
         xr_control.onStateChangedObservable.add((state) => {
+            alert(state);
             xr_state = state;
         });
 
