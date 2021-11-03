@@ -1,5 +1,6 @@
 let scene = null;
 let xr_control = null;
+let selected_photo = 0;
 let photospheres = [
     {url: 'images/38-Chicago_AlleyMural&Graffiti.jpg', type: BABYLON.PhotoDome.MODE_MONOSCOPIC},
     {url: 'images/38-Chicago_GeorgeFloydMural.jpg', type: BABYLON.PhotoDome.MODE_MONOSCOPIC}
@@ -47,6 +48,9 @@ function createScene(canvas, engine) {
         babylon_domes.push(dome);
     }
     
+    // Set up callback for touch / click events
+    scene.onPointerDown = pointerDown;
+    
     // Default environment
     const environment = scene.createDefaultEnvironment();
     
@@ -73,4 +77,15 @@ function startRenderLoop(engine) {
     window.addEventListener('resize', () => {
         engine.resize();
     });
+}
+
+function pointerDown(event, pick_info) {
+    // still use left mouse click for panning image
+    if (event.pointerType !== 'mouse' || event.button !== 0) {
+        selected_photo = (selected_photo + 1) % babylon_domes.length;
+        let i;
+        for (i = 0; i < babylon_domes.length; i++) {
+            babylon_domes[i].setEnabled(selected_photo === i);
+        }
+    }
 }
