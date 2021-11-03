@@ -1,6 +1,5 @@
 let scene = null;
 let xr_control = null;
-let xr_state = BABYLON.WebXRState.NOT_IN_XR;
 let selected_photo = 0;
 let photospheres = [
     {url: 'images/38-Chicago_AlleyMural&Graffiti.jpg', type: BABYLON.PhotoDome.MODE_MONOSCOPIC},
@@ -61,10 +60,6 @@ function createScene(canvas, engine) {
     .then((xr_helper) => {
         xr_control = xr_helper;
         xr_control.teleportation.detach();
-        xr_control.onStateChangedObservable.add((state) => {
-            alert(state);
-            xr_state = state;
-        });
 
         startRenderLoop(engine);
     })
@@ -86,8 +81,9 @@ function startRenderLoop(engine) {
 }
 
 function pointerDown(event) {
+    console.log(xr_control.baseExperience.state);
     if ((event.pointerType === 'mouse' && event.button !== 0) || 
-        (event.pointerType === 'touch' && xr_state === BABYLON.WebXRState.IN_XR)){
+        (event.pointerType === 'touch' && xr_control.baseExperience.state === BABYLON.WebXRState.IN_XR)){
         selected_photo = (selected_photo + 1) % babylon_domes.length;
         let i;
         for (i = 0; i < babylon_domes.length; i++) {
