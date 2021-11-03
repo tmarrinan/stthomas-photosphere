@@ -1,5 +1,6 @@
 let scene = null;
 let xr_control = null;
+let xr_state = WebXRState.NOT_IN_XR;
 let selected_photo = 0;
 let photospheres = [
     {url: 'images/38-Chicago_AlleyMural&Graffiti.jpg', type: BABYLON.PhotoDome.MODE_MONOSCOPIC},
@@ -49,7 +50,8 @@ function createScene(canvas, engine) {
     }
     
     // Set up callback for touch / click events
-    scene.onPointerDown = pointerDown;
+    //scene.onPointerDown = pointerDown;
+    document.addEventListener('pointerdown', pointerDown, false);
     
     // Default environment
     const environment = scene.createDefaultEnvironment();
@@ -59,6 +61,9 @@ function createScene(canvas, engine) {
     .then((xr_helper) => {
         xr_control = xr_helper;
         xr_control.teleportation.detach();
+        xr_control.onStateChangedObservable.add((state) => {
+            xr_state = state;
+        });
 
         startRenderLoop(engine);
     })
@@ -79,9 +84,8 @@ function startRenderLoop(engine) {
     });
 }
 
-function pointerDown(event, pick_info) {
-    // still use left mouse click for panning image
-    if ((event.pointerType === 'mouse' && event.button !== 0) || event.pointerType === 'touch'){
+function pointerDown(event) {
+    if ((event.pointerType === 'mouse' && event.button !== 0) || (event.pointerType === 'touch' && xr_state === WebXRState.IN_XR)){
         selected_photo = (selected_photo + 1) % babylon_domes.length;
         let i;
         for (i = 0; i < babylon_domes.length; i++) {
