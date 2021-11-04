@@ -3,7 +3,10 @@ let xr_control = null;
 let selected_photo = 0;
 let photospheres = [
     {url: 'images/38-Chicago_AlleyMural&Graffiti.jpg', type: BABYLON.PhotoDome.MODE_MONOSCOPIC},
-    {url: 'images/38-Chicago_GeorgeFloydMural.jpg', type: BABYLON.PhotoDome.MODE_MONOSCOPIC}
+    {url: 'images/38-Chicago_GeorgeFloydMural.jpg', type: BABYLON.PhotoDome.MODE_MONOSCOPIC},
+    {url: 'images/38-Chicago_ChicagoAveMurals.jpg', type: BABYLON.PhotoDome.MODE_MONOSCOPIC},
+    {url: 'images/GhebresRestaurant.jpg', type: BABYLON.PhotoDome.MODE_MONOSCOPIC}
+    
 ];
 let babylon_domes = [];
 
@@ -49,7 +52,6 @@ function createScene(canvas, engine) {
     }
     
     // Set up callback for touch / click events
-    //scene.onPointerDown = pointerDown;
     document.addEventListener('pointerdown', pointerDown, false);
     
     // Default environment
