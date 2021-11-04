@@ -61,7 +61,7 @@ function createScene(canvas, engine) {
         xr_control = xr_helper;
         xr_control.teleportation.detach();
         xr_control.input.onControllerAddedObservable.add((input_source) => {
-            console.log(input_source);
+            xr_control.baseExperience.sessionManager.session.onselect = userSelect;
         });
 
         startRenderLoop(engine);
@@ -94,4 +94,8 @@ function pointerDown(event) {
             babylon_domes[i].setEnabled(selected_photo === i);
         }
     }
+}
+
+function userSelect(source) {
+    console.log(source);
 }
