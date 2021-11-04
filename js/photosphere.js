@@ -60,6 +60,9 @@ function createScene(canvas, engine) {
     .then((xr_helper) => {
         xr_control = xr_helper;
         xr_control.teleportation.detach();
+        xr_control.input.onControllerAddedObservable.add((input_source) => {
+            console.log(input_source);
+        });
 
         startRenderLoop(engine);
     })
