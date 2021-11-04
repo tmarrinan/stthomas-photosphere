@@ -81,7 +81,8 @@ function startRenderLoop(engine) {
 }
 
 function pointerDown(event) {
-    console.log(xr_control.baseExperience.state);
+    console.log("XR State:", xr_control.baseExperience.state);
+    console.log(event);
     if ((event.pointerType === 'mouse' && event.button !== 0) || 
         (event.pointerType === 'touch' && xr_control.baseExperience.state === BABYLON.WebXRState.IN_XR)){
         selected_photo = (selected_photo + 1) % babylon_domes.length;
